@@ -3,6 +3,7 @@
     Event
     <span>@ {{ event.time }} on {{ event.date }}</span>
     <h2>{{ event.title }}</h2>
+    <br>
   </div>
 </template>
 
