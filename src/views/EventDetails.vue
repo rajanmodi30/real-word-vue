@@ -18,7 +18,7 @@ export default {
   props: ["id"],
   created() {
     eventService
-      .getEvent(123)
+      .getEvent(this.id)
       .then((response) => {
         this.eventObject = response.data;
         console.log(this.eventObject);
