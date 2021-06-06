@@ -1,12 +1,31 @@
 <template>
-  <div class="event-details" v-if="eventObject">
-    Event
-    <span
-      >@ {{ eventObject.time }} on {{ eventObject.date }} By
-      {{ eventObject.location }}</span
-    >
-    <h2>{{ eventObject.title }}</h2>
-    <br />
+  <div
+    class="
+      py-8
+      px-8
+      max-w-sm
+      mx-auto
+      bg-white
+      rounded-xl
+      shadow-md
+      space-y-2
+      sm:py-4
+      sm:flex
+      sm:items-center
+      sm:space-y-0 sm:space-x-6
+      float-center
+    "
+    v-if="eventObject"
+  >
+    <div class="text-center space-y-2 sm:text-left">
+      <div class="space-y-0.5">
+        <p class="text-lg text-black font-semibold">
+          @ {{ eventObject.time }} on {{ eventObject.date }} By
+          {{ eventObject.location }}
+        </p>
+        <p class="text-gray-500 font-medium">{{ eventObject.title }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,13 +51,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.event-details {
-  padding: 20px;
-  cursor: pointer;
-  margin-bottom: 18px;
-  margin: auto;
-  width: 50%;
-}
-</style>

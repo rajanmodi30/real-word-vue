@@ -1,12 +1,5 @@
 <template>
-  <div class="home">
-    <h1>Events For Good</h1>
-    <EventCard
-      v-for="event in events"
-      :key="event.id"
-      :event="event"
-    ></EventCard>
-  </div>
+  <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
 </template>
 
 <script>
@@ -25,6 +18,7 @@ export default {
     };
   },
   created() {
+    console.log("calling it");
     eventService
       .getEvents()
       .then((data) => {
