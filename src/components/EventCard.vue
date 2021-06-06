@@ -20,7 +20,7 @@
       <div class="text-center space-y-2 sm:text-left">
         <div class="space-y-0.5">
           <p class="text-lg text-black font-semibold">
-            Event @ {{ event.time }} on {{ event.date }}
+            {{ event.title }} @ {{ event.time }} on {{ event.date }}
           </p>
         </div>
       </div>
