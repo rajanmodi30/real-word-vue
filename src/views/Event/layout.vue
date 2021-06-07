@@ -17,15 +17,11 @@
     "
     v-if="eventObject"
   >
-    <div class="text-center space-y-2 sm:text-left">
-      <div class="space-y-0.5">
-        <p class="text-lg text-black font-semibold">
-          @ {{ eventObject.time }} on {{ eventObject.date }} By
-          {{ eventObject.location }}
-        </p>
-        <p class="text-gray-500 font-medium">{{ eventObject.title }}</p>
-      </div>
-    </div>
+    <router-link :to="{ name: 'details' }">Details</router-link>|
+    <router-link :to="{ name: 'register' }">Register</router-link>|
+    <router-link :to="{ name: 'edit' }">Edit</router-link>
+
+    <router-view :eventObject="eventObject" />
   </div>
 </template>
 
@@ -33,7 +29,7 @@
 import eventService from "@/services/eventService.js";
 
 export default {
-  name: "EventDetails",
+  name: "EventLayout",
   props: ["id"],
   created() {
     eventService
@@ -44,6 +40,10 @@ export default {
       })
       .catch((error) => {
         console.log("error", error);
+        this.$router.push({
+          name: "notFound",
+          params: { resource: "event" },
+        });
       });
   },
   data() {
