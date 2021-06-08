@@ -51,6 +51,23 @@ export default {
         });
     });
   },
+  beforeRouteUpdate(routeTo) {
+    NProgress.start();
+    eventService
+      .getEvents(this.pagelimit, parseInt(routeTo.query.page) || 1)
+      .then((data) => {
+        this.events = data.data;
+        this.currentPageEvent = data.headers["x-total-count"];
+        console.log("data", data.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        return { name: "notFound", params: { resource: "no internet" } };
+      })
+      .finally(() => {
+        NProgress.done();
+      });
+  },
   computed: {
     hasNextPage() {
       let totalPages = Math.ceil(this.currentPageEvent / 2);
