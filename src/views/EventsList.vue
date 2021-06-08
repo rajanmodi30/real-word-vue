@@ -18,8 +18,7 @@
 // @ is an alias to /src
 import EventCard from "@/components/EventCard.vue";
 import eventService from "@/services/eventService.js";
-import { watchEffect } from "@vue/runtime-core";
-
+import NProgress from "nprogress";
 export default {
   name: "EventsList",
   props: ["page"],
@@ -33,18 +32,22 @@ export default {
       currentPageEvent: 0,
     };
   },
-  created() {
-    watchEffect(() => {
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    NProgress.start();
+    next((comp) => {
       eventService
-        .getEvents(this.pagelimit, this.page)
+        .getEvents(comp.pagelimit, parseInt(routeTo.query.page) || 1)
         .then((data) => {
-          this.events = data.data;
-          this.currentPageEvent = data.headers["x-total-count"];
+          comp.events = data.data;
+          comp.currentPageEvent = data.headers["x-total-count"];
           console.log("data", data.data);
         })
         .catch((error) => {
           console.log("error", error);
-          alert("could not fetch data");
+          next({ name: "notFound", params: { resource: "no internet" } });
+        })
+        .finally(() => {
+          NProgress.done();
         });
     });
   },

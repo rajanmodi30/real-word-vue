@@ -27,24 +27,31 @@
 
 <script>
 import eventService from "@/services/eventService.js";
+import NProgress from "nprogress";
 
 export default {
   name: "EventLayout",
   props: ["id"],
-  created() {
-    eventService
-      .getEvent(this.id)
-      .then((response) => {
-        this.eventObject = response.data;
-        console.log(this.eventObject);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        this.$router.push({
-          name: "notFound",
-          params: { resource: "event" },
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    NProgress.start();
+    next((comp) => {
+      eventService
+        .getEvent(comp.id)
+        .then((response) => {
+          comp.eventObject = response.data;
+          console.log(comp.eventObject);
+        })
+        .catch((error) => {
+          console.log("error", error);
+          next({
+            name: "notFound",
+            params: { resource: "event" },
+          });
+        })
+        .finally(() => {
+          NProgress.done();
         });
-      });
+    });
   },
   data() {
     return { eventObject: null };
